@@ -10,5 +10,6 @@ def generate_notes_for_bar(bar, chord_root, chord_type):
 #We update all the bars so their notes will hold data about what pitch the note actually plays. 
 def generate_notes(bars, chord_root, chord_type):
     for bar in bars: 
-        bar = generate_notes_for_bar(bars, chord_root, chord_type)
-    notes = [x['notes'] for x in bars]
+        bar = generate_notes_for_bar(bar, chord_root, chord_type)
+    notes = [y for x in bars for y in x['notes']]
+    return notes

@@ -16,9 +16,10 @@ def get_instrument_data(instrument_name):
 
 def add_instrument_data_to_notes(notes, instrument_name):
     instrument = get_instrument_data(instrument_name)
-
+    print notes
     for note in notes:
         note['program_number'] = instrument['program_number']
+        print note
         note['volume'] *= instrument['volume']
 
     return notes

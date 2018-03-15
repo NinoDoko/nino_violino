@@ -1,14 +1,14 @@
-import chord_handler, instrument_handler, note_generator, timing_organizer
+import chord_handler, instrument_handler, note_generator, timing_organizer, midi_handler
 
 
 #The block_parser uses all the other modules in order to process a batch of blocks. Blocks hold the following sort of data: 
 
-{
+test_block = {
     "block_data" : {
         "bpm" : 120,
         "instrument" : "piano",
         "blocks" : []
-    }
+    },
     "structure_data" : {
         "notes_data" : {
             "chord_root" : "A",
@@ -34,13 +34,15 @@ import chord_handler, instrument_handler, note_generator, timing_organizer
         "id" : "main",
         "bpm" : 120, 
         "instrument" : "piano",
-        "blocks" : [
-            "block_data" : {
-                "instrument" : "trumpet", 
-                "id" : "chorus",
-            },
-            "structure_data" : {
-                'data' : '...'
+        "blocks" : [        
+            {
+                "block_data" : {
+                    "instrument" : "trumpet", 
+                    "id" : "chorus",
+                },
+                "structure_data" : {
+                    'data' : '...'
+                }
             }
         ]
     }
@@ -58,7 +60,7 @@ def parse_block(block):
     notes = note_generator.generate_notes(bars = bars, **block['structure_data']['notes_data'])
 
     #Then we update the notes with the instruments, which may modify the volume (for instance, trumpet may be loud, so it should have a multiplier, like {"insturment" : "trumpet", "volume" : 0.5, "program_number" : 123}, not the actual program_number tho.
-    notes = instrument_handler.add_instrument_data(notes = notes, instrument_name = block['block_data']['instrument'])
+    notes = instrument_handler.add_instrument_data_to_notes(notes = notes, instrument_name = block['block_data']['instrument'])
 
     #We finally have a list of notes in dictionary form with all the data needed to convert them to midi. 
     midi_file = midi_handler.write_notes_to_midi(notes)
@@ -68,3 +70,5 @@ def parse_block(block):
     
     #And done!
     return wav_file
+
+parse_block(test_block)
