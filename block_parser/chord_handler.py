@@ -1,6 +1,11 @@
 base_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 notes_list = [x + y for y in  [str(i) for i in range(0, 9)] for x in base_notes]
+
 pitch_offset = 24
+
+def get_pitch(note):
+    return notes_list.index(note) + pitch_offset
+
 
 chords_diffs = {
     'major' : [0, 2, 4, 5, 7, 9, 11, 12],

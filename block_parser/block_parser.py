@@ -41,7 +41,7 @@ test_block = {
         "timing_data" : {
             "starting_beat" : 12, 
             "bar_length" : 4, 
-            "number_of_bars" : 4,
+            "number_of_bars" : 50,
             "pattern" : [0, 1, 3],
             "accents" : {0 : 20, 2 : 10},
             "base_volume" : 50,

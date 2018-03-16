@@ -1,5 +1,6 @@
 import random, chord_handler
 
+
 markov_values = [
     [3, 2, 5, 4, 5, 3, 1, 5], 
     [2, 3, 2, 5, 5, 5, 4, 2],
@@ -10,6 +11,8 @@ markov_values = [
     [1, 5, 2, 3, 5, 2, 2, 2],
     [2, 3, 4, 4, 5, 4, 2, 1],
 ]
+
+
 
 #Extremely rudimentary and not very random. Eventually turn to a better distribution. 
 def get_note_from_offsets(offset_list):
@@ -57,6 +60,7 @@ def get_next_note_markov(markov_values, chord_root, chord_type):
 def generate_notes_for_bar(bar, chord_root, chord_type, note_generator):
     for note in bar['notes']: 
         note['value'] = note_generator.next()
+        note['pitch'] = chord_handler.get_pitch(note['value'])
     return bar
 
 #We update all the bars so their notes will hold data about what pitch the note actually plays. 
