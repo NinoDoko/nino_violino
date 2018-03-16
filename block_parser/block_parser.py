@@ -13,7 +13,7 @@ test_block = {
                 }, 
                 "structure_data" : {
                     "notes_data" : {
-                        "chord_root" : "C",
+                        "chord_root" : "C4",
                     }, 
                     "timing_data" : {
                         "starting_beat" : 0
@@ -24,7 +24,7 @@ test_block = {
                 }, 
                 "structure_data" : {
                     "notes_data" : {
-                        "chord_root" : "F",
+                        "chord_root" : "F3",
                     }, 
                     "timing_data" : {
                         "starting_beat" : 14
@@ -35,7 +35,7 @@ test_block = {
     },
     "structure_data" : {
         "notes_data" : {
-            "chord_root" : "A",
+            "chord_root" : "A2",
             "chord_type" : "major",
         },
         "timing_data" : {
