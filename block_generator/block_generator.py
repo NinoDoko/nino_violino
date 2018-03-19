@@ -1,4 +1,4 @@
-from block_parser import block_parser, note_generator, chord_handler
+from block_parser import block_parser, note_generator, chord_handler, instrument_handler
 
 from violino_conf import configuration as gen_conf
 import random, copy
@@ -87,8 +87,8 @@ def generate_block(base_block):
     new_block['structure_data']['timing_data'] = calculate_block_timing(number_of_bars, bar_length, base_volume, accents, base_block)
 
     for i in range(number_of_bars): 
-        instrument = random.choice(gen_conf.get('instrument_pool', 'piano'))
-
+        instrument = random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments()))
+        print 'My instrument is : ', instrument
         block_instrument = {
             'block_data' : {
                 'instrument' : instrument,

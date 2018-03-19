@@ -11,6 +11,6 @@ configuration = {
     'upper_chord_diff_limit' : 2,
     'chord_types' : ['major', 'minor'], 
 
-    'instrument_pool' : ['piano'],
+#    'instrument_pool' : ['piano'],
 
 }

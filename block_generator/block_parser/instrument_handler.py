@@ -18,11 +18,16 @@ def get_instrument_data(instrument_name):
 
     return instrument[0]
 
+def get_list_of_instruments(instruments_file = ''):
+    instruments = get_all_instrument_data(instruments_file)
+
+    return [x['instrument_name'] for x in instruments]
 
 def add_instrument_data_to_notes(notes, instrument_name):
     instrument = get_instrument_data(instrument_name)
+    print 'Adding program number to : ', instrument
     for note in notes:
         note['program_number'] = instrument['program_number']
-        note['volume'] *= instrument['volume']
+        note['volume'] = instrument['volume']
 
     return notes
