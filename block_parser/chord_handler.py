@@ -37,6 +37,5 @@ def get_note_from_offset(note_offset, chord_root, chord_type):
     chord_diffs = chords_diffs[chord_type]
 
     chord_notes = [notes_list[chord_root_index + x] for x in chord_diffs]
-    print chord_notes
     note = chord_notes[note_offset]
     return note

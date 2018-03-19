@@ -9,6 +9,7 @@ def write_notes_to_midi(notes):
     mid = MIDIFile(100)
     file_name = 'test.mid'
     for note in notes:
+        print 'Adding note with pitch ', note['pitch'], ' starting at : ', note['start'], ' length of ', note['length'], ' and volume', note['volume']
         mid.addNote(0, 0, note['pitch'], note['start'], note['length'], note['volume'])
 #        mid.addNote(track = 0, channel = 0, pitch = 120, self.track, self.channel, self.pitch, self.time, self.duration, self.volume)
 

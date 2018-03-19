@@ -30,20 +30,36 @@ test_block = {
                         "starting_beat" : 14
                     }
                 }
-            }, 
+            }, {
+                "block_data" : {
+                }, 
+                "structure_data" : {
+                    }, 
+                    "timing_data" : {
+                        "starting_beat" : 28 
+                    }
+            }, {
+                "block_data" : {
+                }, 
+                "structure_data" : {
+                    }, 
+                    "timing_data" : {
+                        "starting_beat" : 42
+                }
+            }
+
         ]
     },
     "structure_data" : {
         "notes_data" : {
-            "chord_root" : "A2",
+            "chord_root" : "G3",
             "chord_type" : "major",
         },
         "timing_data" : {
             "starting_beat" : 12, 
-            "bar_length" : 4, 
+            "bar_length" : 13, 
             "number_of_bars" : 50,
-            "pattern" : [0, 1, 3],
-            "accents" : {0 : 20, 2 : 10},
+            "accents" : {0 : 20, 2 : 10, 5 : 10, 7 : 20},
             "base_volume" : 50,
         },
     }
@@ -66,8 +82,8 @@ def get_block_notes(block, parent_data = {}):
     #If this is a child block, we first update any data only present in its parents. 
     if parent_data: 
         block['block_data'] = update_child_from_parent(block['block_data'], parent_data['block_data'], excluded_keys = ['blocks', 'id'])
-        block['structure_data']['notes_data'] = update_child_from_parent(block['structure_data']['notes_data'], parent_data['structure_data']['notes_data'])
-        block['structure_data']['timing_data'] = update_child_from_parent(block['structure_data']['timing_data'], parent_data['structure_data']['timing_data'])
+        block['structure_data']['notes_data'] = update_child_from_parent(block['structure_data'].get('notes_data', {}), parent_data['structure_data']['notes_data'])
+        block['structure_data']['timing_data'] = update_child_from_parent(block['structure_data'].get('timing_data', {}), parent_data['structure_data']['timing_data'])
 
     #If this is a block containing other blocks, it doesn't generate notes by itself. 
     #Instead it just gets notes from its child blocks. 
