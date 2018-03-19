@@ -119,4 +119,4 @@ def parse_block(block):
     #And done!
     return wav_file
 
-parse_block(test_block)
+#parse_block(test_block)

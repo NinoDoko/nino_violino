@@ -1,6 +1,11 @@
 import json
+import os
 
-def get_all_instrument_data(instruments_file = 'instruments.json'):
+instruments_path = os.path.dirname(os.path.realpath(__file__)) + '/instruments.json'
+
+def get_all_instrument_data(instruments_file = ''):
+    instruments_file = instruments_file or instruments_path
+
     with open(instruments_file) as f:
         instruments = json.load(f)
     return instruments
