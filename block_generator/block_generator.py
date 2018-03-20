@@ -5,7 +5,7 @@ import random, copy
 
 block_template = {
     "block_data" : {
-        "blocks" : []
+        "blocks" : [],
     },
     "structure_data" : {
         "notes_data" : {
@@ -88,10 +88,13 @@ def generate_block(base_block):
 
     for i in range(number_of_bars): 
         instrument = random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments()))
+        instrument = instrument_handler.get_instrument_data(instrument)
         print 'My instrument is : ', instrument
         block_instrument = {
             'block_data' : {
                 'instrument' : instrument,
+                
+                'track' : i+1
             }, 
             'structure_data' : {
                 'timing_data' : {},

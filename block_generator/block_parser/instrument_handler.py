@@ -23,9 +23,7 @@ def get_list_of_instruments(instruments_file = ''):
 
     return [x['instrument_name'] for x in instruments]
 
-def add_instrument_data_to_notes(notes, instrument_name):
-    instrument = get_instrument_data(instrument_name)
-    print 'Adding program number to : ', instrument
+def add_instrument_data_to_notes(notes, instrument):
     for note in notes:
         note['program_number'] = instrument['program_number']
         note['volume'] = instrument['volume']
