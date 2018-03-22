@@ -17,8 +17,10 @@ def add_notes_to_midi(mid, notes):
     return mid
 
 def add_program_change(mid, block, program):
-    print 'Adding change for ', block['block_data'], ' with program ', program, ' at ', block['structure_data']['timing_data']['starting_beat']
-    mid.addProgramChange(block['block_data']['track'], block['block_data']['track'], block['structure_data']['timing_data']['starting_beat'], program)
+    s_data = block['structure_data']['timing_data']
+#    print 'Adding change for ', block['block_data'], ' with program ', program, ' at ', block['structure_data']['timing_data']['starting_beat']
+    for starting_beat in s_data['starting_beats']: 
+        mid.addProgramChange(block['block_data']['track'], block['block_data']['track'], starting_beat, program)
     return mid
 
 def midi_to_wav(midi_file):
@@ -40,5 +42,6 @@ def handle_midi_changes(mid, block):
     if b_data.get('track'):
         add_program_change(mid, block, block_instrument)
         if b_data.get('bpm'): 
-            mid.addTempo(b_data['track'], block['structure_data']['timing_data']['starting_beat'], b_data['bpm'])
+            for starting_beat in block['structure_data']['timing_data']['starting_beats']:
+                mid.addTempo(b_data['track'], starting_beat, b_data['bpm'])
     return mid

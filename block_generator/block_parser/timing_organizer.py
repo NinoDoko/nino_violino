@@ -26,13 +26,20 @@ def generate_notes_for_bar(bar_length, pattern):
 
 
 #Gets a dictionary containing data on how to order notes. 
-def get_timings(starting_beat = 0, bar_length = 4, number_of_bars = 4, pattern = [], accents = {}, base_volume = 50):
+def get_timings(starting_beats = [], bar_length = 4, number_of_bars = 4, pattern = [], accents = {}, base_volume = 50):
     pattern = pattern or make_bar_pattern(bar_length)
-    print 'Made pattern : ', pattern
-    bars = [
-        {'start' : starting_beat + bar_length * i, "base_volume" : base_volume, "notes" : generate_notes_for_bar(bar_length, pattern)}
+    base_bars = [
+        {'bar_offset' : bar_length * i, "base_volume" : base_volume, "notes" : generate_notes_for_bar(bar_length, pattern)}
     for i in range(number_of_bars)]
-#    bars = [{"start" : 0, "base_volume" : base_volume, "notes" : [{"start" : 0, "length" : 1}, {"start" : 1, "length" : 2}, {"start" : 2, "length" : 1}]}, {"start" : 3, "base_volume" : base_volume, "notes" : [{"start" : 0, "length" : 1}, {"start" : 1, "length" : 2}, {"start" : 2, "length" : 1}]}]
+
+    bars = []
+
+    for starting_beat in starting_beats: 
+        new_bars = base_bars[:]
+        for bar in new_bars: 
+            bar['start'] = bar['bar_offset'] + starting_beat
+        bars += new_bars
+
     bars = handle_timing(bars)
     bars = handle_accenting(bars, accents)
     return bars

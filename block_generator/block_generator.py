@@ -32,7 +32,7 @@ def get_block_bpm(block):
 def get_last_timing(base_block):
     if not base_block['block_data']['blocks']: 
         last_timing = {
-            'starting_beat' : 0, 
+            'starting_beats' : [0], 
             'number_of_bars' : 0,
             'bar_length' : 0
         }
@@ -65,7 +65,7 @@ def calculate_block_timing(number_of_bars, bar_length, base_volume, accents, bas
     previous_timing = get_last_timing(base_block)
 
     timing_data = {
-                'starting_beat' : previous_timing['starting_beat'] + previous_timing['number_of_bars'] * previous_timing['bar_length'],
+                'starting_beats' : [previous_timing['starting_beats'][0] + previous_timing['number_of_bars'] * previous_timing['bar_length']],
                 'bar_length' : bar_length, 
                 'number_of_bars' : number_of_bars,
                 'base_volume' : base_volume,

@@ -18,7 +18,7 @@ test_block = {
                         "chord_root" : "C4",
                     }, 
                     "timing_data" : {
-                        "starting_beat" : 0
+                        "starting_beats" : [0]
                     }
                 }
             }, {
@@ -29,7 +29,7 @@ test_block = {
                         "chord_root" : "F3",
                     }, 
                     "timing_data" : {
-                        "starting_beat" : 14
+                        "starting_beats" : [14]
                     }
                 }
             }, {
@@ -38,7 +38,7 @@ test_block = {
                 "structure_data" : {
                     }, 
                     "timing_data" : {
-                        "starting_beat" : 28 
+                        "starting_beats" : [28]
                     }
             }, {
                 "block_data" : {
@@ -46,7 +46,7 @@ test_block = {
                 "structure_data" : {
                     }, 
                     "timing_data" : {
-                        "starting_beat" : 42
+                        "starting_beats" : [42]
                 }
             }
 
@@ -58,7 +58,7 @@ test_block = {
             "chord_type" : "major",
         },
         "timing_data" : {
-            "starting_beat" : 12, 
+            "starting_beats" : [12], 
             "bar_length" : 13, 
             "number_of_bars" : 50,
             "accents" : {0 : 20, 2 : 10, 5 : 10, 7 : 20},
