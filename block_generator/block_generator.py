@@ -93,7 +93,6 @@ def generate_block(base_block):
         block_instrument = {
             'block_data' : {
                 'instrument' : instrument,
-                
                 'track' : i+1
             }, 
             'structure_data' : {
@@ -114,7 +113,7 @@ def generate_song():
         new_block = generate_block(base_block)
         base_block['block_data']['blocks'].append(new_block)
 
-    block_parser.parse_block(base_block)
+    block_parser.make_block_music(base_block)
 
     return base_block
 

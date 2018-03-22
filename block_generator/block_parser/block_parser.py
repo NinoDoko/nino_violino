@@ -104,13 +104,13 @@ def get_block_notes(block, parent_data = {}):
     notes = note_generator.generate_notes(bars = bars, **block['structure_data']['notes_data'])
 
     #Then we update the notes with the instruments, which may modify the volume (for instance, trumpet may be loud, so it should have a multiplier, like {"insturment" : "trumpet", "volume" : 0.5, "program_number" : 123}, not the actual program_number tho.
-    notes = instrument_handler.add_instrument_data_to_notes(notes = notes, instrument = block['block_data']['instrument'])
+    notes = instrument_handler.add_instrument_data_to_notes(notes = notes, block_data = block['block_data'])
     #NOTE we don't actually need instrument data in the notes themselves - only when we need to change. So we handle this at the block level atm. 
 
     return notes
 
 
-def parse_block(block):
+def make_block_music(block):
     notes = get_block_notes(block)
     print [x['volume'] for x in notes]
 
@@ -120,14 +120,14 @@ def parse_block(block):
     midi_file = midi_handler.add_notes_to_midi(midi_file, notes)
 
     #We also have to add the program, bpm, etc. changes, if any. 
-    midi_file = midi_handler.handle_midi_changes(midi_file, block)
+    midi_handler.handle_midi_changes(midi_file, block)
 
     midi_file_name = midi_handler.write_mid_file(midi_file)
 
     #midi_file should just be a filename. We want to make it into a wav. 
-#    wav_file = midi_handler.midi_to_wav(midi_file_name)
+    wav_file = midi_handler.midi_to_wav(midi_file_name)
     
     #And done!
-#    return wav_file
+    return wav_file
 
 #parse_block(test_block)
