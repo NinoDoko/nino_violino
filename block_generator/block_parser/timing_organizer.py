@@ -1,4 +1,4 @@
-import random
+import random, copy
 
 #This is kinda a dummy function, which atm only randomly makes a pattern.
 #TODO I probably want to do this with some sort of AI. Maybe some neurons or something. 
@@ -32,12 +32,17 @@ def get_timings(starting_beats = [], bar_length = 4, number_of_bars = 4, pattern
         {'bar_offset' : bar_length * i, "base_volume" : base_volume, "notes" : generate_notes_for_bar(bar_length, pattern)}
     for i in range(number_of_bars)]
 
+    print 'My offsets are : ', [s['bar_offset'] for s in base_bars]
+
     bars = []
 
     for starting_beat in starting_beats: 
-        new_bars = base_bars[:]
+        new_bars = copy.deepcopy(base_bars)
         for bar in new_bars: 
             bar['start'] = bar['bar_offset'] + starting_beat
+
+        print 'For starting beat at ', starting_beat
+        print 'Adding new bars at: ', [x['start'] for x in new_bars]
         bars += new_bars
 
     bars = handle_timing(bars)
@@ -46,8 +51,10 @@ def get_timings(starting_beats = [], bar_length = 4, number_of_bars = 4, pattern
 
 def handle_timing(bars):
     for bar in bars: 
+        print 'I start at : ', bar['start']
         for note in bar['notes']: 
             note['start'] += bar['start']
+            print 'I have a note at : ', note['start']
  
     return bars
    

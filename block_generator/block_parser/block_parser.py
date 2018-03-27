@@ -112,7 +112,6 @@ def get_block_notes(block, parent_data = {}):
 
 def make_block_music(block):
     notes = get_block_notes(block)
-    print [x['volume'] for x in notes]
 
     midi_file = MIDIFile(100)
 

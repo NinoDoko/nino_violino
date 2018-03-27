@@ -1,3 +1,4 @@
+import block_organizer
 from block_parser import block_parser, note_generator, chord_handler, instrument_handler
 
 from violino_conf import configuration as gen_conf
@@ -61,35 +62,38 @@ def block_chord_generator(number_of_bars):
         }
         yield notes_data
 
-def calculate_block_timing(number_of_bars, bar_length, base_volume, accents, base_block):
-    previous_timing = get_last_timing(base_block)
+def base_block_timing(number_of_bars, bar_length, base_volume, accents, base_block, number_of_repeats):
 
     timing_data = {
-                'starting_beats' : [previous_timing['starting_beats'][0] + previous_timing['number_of_bars'] * previous_timing['bar_length']],
+                'starting_beats' : [i * number_of_bars * bar_length for i in range(number_of_repeats)],
                 'bar_length' : bar_length, 
                 'number_of_bars' : number_of_bars,
                 'base_volume' : base_volume,
                 'accents' : accents
     }
+    print 'I have a timing data of ', timing_data
     return timing_data
 
-def generate_block(base_block):
+def generate_block(base_block, instrument_pool):
     new_block = copy.deepcopy(block_template)
 
     #Right now we just randomly choose from the configuration. Maybe have an AI to do this for us? 
     number_of_bars = random.choice(gen_conf.get('bar_number_range', range(4, 7)))
     bar_length = random.choice(gen_conf.get('bar_len_range', range(4, 7)))
     base_volume = random.choice(gen_conf.get('base_volume_range', range(40, 80, 10)))
+    number_of_repeats = random.choice(gen_conf.get('number_of_repeats_range', [1]))
+    number_block_occurences = random.choice(gen_conf.get('number_block_occurences_range', [1]))
+
     accents = {} #Temporary, don't even know how to make this work. 
     chord_generator = block_chord_generator(number_of_bars)
 
     new_block['block_data']['bpm'] = get_block_bpm(base_block)
-    new_block['structure_data']['timing_data'] = calculate_block_timing(number_of_bars, bar_length, base_volume, accents, base_block)
+    new_block['block_data']['block_occurences'] = number_block_occurences
+    new_block['structure_data']['timing_data'] = base_block_timing(number_of_bars, bar_length, base_volume, accents, base_block, number_of_repeats)
 
     for i in range(number_of_bars): 
-        instrument = random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments()))
+        instrument = random.choice(instrument_pool)
         instrument = instrument_handler.get_instrument_data(instrument)
-        print 'My instrument is : ', instrument
         block_instrument = {
             'block_data' : {
                 'instrument' : instrument,
@@ -109,9 +113,14 @@ def generate_song():
     base_block = copy.deepcopy(block_template)
     base_block['block_data']['bpm'] = random.choice(gen_conf.get('bpm_range', [240]))
 
+    max_number_of_instruments = gen_conf.get('bar_number_range', range(4, 7))[-1]
+    instrument_pool = [random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments())) for i in range(max_number_of_instruments)]
+
     for block in range(number_of_blocks):
-        new_block = generate_block(base_block)
+        new_block = generate_block(base_block, instrument_pool)
         base_block['block_data']['blocks'].append(new_block)
+
+    base_block['block_data']['blocks'] = block_organizer.organize_blocks(base_block['block_data']['blocks'])
 
     block_parser.make_block_music(base_block)
 

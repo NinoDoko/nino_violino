@@ -10,10 +10,8 @@ def write_mid_file(mid, file_name = 'test.mid'):
 def add_notes_to_midi(mid, notes):
     file_name = 'test.mid'
     for note in notes:
-        print note
         mid.addNote(note['track'], note['channel'], note['pitch'], note['start'], note['length'], note['volume'])
 
-#    write_mid_file(mid)
     return mid
 
 def add_program_change(mid, block, program):
