@@ -151,22 +151,6 @@
         "high_end": 3
     },
     {
-        "program_number": 20,
-        "volume": 25,
-        "instrument_play_time": "1:16 - 1:20",
-        "instrument_name": "accordion",
-        "friendly": "Accordion",
-        "high_end": 3
-    },
-    {
-        "program_number": 21,
-        "volume": 25,
-        "instrument_play_time": "1:20 - 1:24",
-        "instrument_name": "accordion_2",
-        "friendly": "Accordion 2",
-        "high_end": 3
-    },
-    {
         "program_number": 22,
         "volume": 20,
         "instrument_play_time": "1:24 - 1:28",

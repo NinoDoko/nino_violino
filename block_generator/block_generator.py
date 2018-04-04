@@ -89,7 +89,6 @@ def base_block_timing(number_of_bars, bar_length, base_volume, accents, base_blo
                 'base_volume' : base_volume,
                 'accents' : accents
     }
-    print 'I have a timing data of ', timing_data
     return timing_data
 
 def generate_block(base_block, instrument_pool):
@@ -131,15 +130,19 @@ def generate_block(base_block, instrument_pool):
         }
         new_block['block_data']['blocks'].append(block_instrument)
 
+
     return new_block
 
 def get_percussion():
     number_of_percussion_tracks = gen_conf.get('percussion_tracks', 2)
     percussion = copy.deepcopy(percussion_block)
     percussion['block_data']['blocks'] *= number_of_percussion_tracks
-    print 'Percusion bock has blocks ', percussion['block_data']['blocks']
 
     return percussion
+
+def print_block_instruments(block):
+    instrument_blocks = [x for x in block['block_data']['blocks'] if x['block_data'].get('instrument')]
+    print 'Instruments for block at ', block['structure_data']['timing_data']['starting_beats'], ' are ', [x['block_data']['instrument']['instrument_name'] for x in instrument_blocks]
 
 def generate_song():
     number_of_blocks = gen_conf.get('number_of_blocks', 1)
@@ -148,7 +151,7 @@ def generate_song():
 
     max_number_of_instruments = gen_conf.get('bar_number_range', range(4, 7))[-1]
     instrument_pool = [random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments())) for i in range(max_number_of_instruments)]
-
+    print 'Instrument pool is : ', instrument_pool
     for block in range(number_of_blocks):
         new_block = generate_block(base_block, instrument_pool)
         percussion = get_percussion()
@@ -156,6 +159,9 @@ def generate_song():
         base_block['block_data']['blocks'].append(new_block)
 
     base_block['block_data']['blocks'] = block_organizer.organize_blocks(base_block['block_data']['blocks'])
+
+    for b in base_block['block_data']['blocks']: 
+        print_block_instruments(b)
 
     block_parser.make_block_music(base_block)
 

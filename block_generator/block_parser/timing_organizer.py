@@ -6,7 +6,9 @@ def make_bar_pattern(number_of_notes):
     pattern = []
     while number_of_notes:
         next_val = random.randint(1, number_of_notes)
-        next_dur = random.randint(1, next_val * 2)
+#        next_dur = random.randint(1, next_val * 2)  #TODO find a better way to find durations that don't sound creepy
+        next_dur = 1
+
         pattern.append((next_val, next_dur))
         number_of_notes -= next_val
 
