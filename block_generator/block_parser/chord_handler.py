@@ -31,6 +31,8 @@ chords_diffs = {
     'insen' : [0, 1, 5, 7, 10],
     'iwato' : [0, 1, 5, 6, 10],
     'locrian' : [0, 1, 3, 5, 6, 8, 10],
+
+    'percussion' : [0, 1, 2, 4, 5, 6, 8, 10],
 }
 
 def get_chord_notes(chord_root, chord_type):

@@ -24,11 +24,12 @@ def get_list_of_instruments(instruments_file = ''):
     return [x['instrument_name'] for x in instruments]
 
 def add_instrument_data_to_notes(notes, block_data):
-    instrument = block_data['instrument']
+    instrument = block_data.get('instrument')
     for note in notes:
         note['channel'] = block_data['track']
         note['track'] = block_data['track']
-        note['program_number'] = instrument['program_number']
-        note['volume'] = instrument['volume']
+        if instrument: 
+            note['program_number'] = instrument['program_number']
+            note['volume'] = instrument['volume']
 
     return notes

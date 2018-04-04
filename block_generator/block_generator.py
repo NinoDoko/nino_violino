@@ -1,4 +1,4 @@
-import block_organizer
+import block_organizer, copy
 from block_parser import block_parser, note_generator, chord_handler, instrument_handler
 
 from violino_conf import configuration as gen_conf
@@ -15,6 +15,24 @@ block_template = {
         },
     }
 }
+
+percussion_block = {
+    'block_data' : {
+        'track' : 9,
+        'channel' : 9,
+        'blocks' : [
+            {'block_data' : {}, 'structure_data' : {'notes_data' : {}, 'timing_data' : {}}}, 
+        ]
+    },
+    'structure_data' : {
+        'notes_data' : {
+            'chord_root' : 'C1',
+            'chord_type' : 'percussion',
+        },
+        'timing_data' : {}
+    }
+}
+
 
 block_template = gen_conf.get('block_template') or block_template
 
@@ -94,6 +112,13 @@ def generate_block(base_block, instrument_pool):
     for i in range(number_of_bars): 
         instrument = random.choice(instrument_pool)
         instrument = instrument_handler.get_instrument_data(instrument)
+
+        #Channel 10 is reserved for percussions, so we shift all channels to the right. 
+        #And to make it more confusing, channe 10 is in musical notations, so because it's 0-indexed here, really we want to have channel = 9 for percussions. 
+
+        if i > 8: 
+            i += 1
+
         block_instrument = {
             'block_data' : {
                 'instrument' : instrument,
@@ -108,6 +133,14 @@ def generate_block(base_block, instrument_pool):
 
     return new_block
 
+def get_percussion():
+    number_of_percussion_tracks = gen_conf.get('percussion_tracks', 2)
+    percussion = copy.deepcopy(percussion_block)
+    percussion['block_data']['blocks'] *= number_of_percussion_tracks
+    print 'Percusion bock has blocks ', percussion['block_data']['blocks']
+
+    return percussion
+
 def generate_song():
     number_of_blocks = gen_conf.get('number_of_blocks', 1)
     base_block = copy.deepcopy(block_template)
@@ -118,6 +151,8 @@ def generate_song():
 
     for block in range(number_of_blocks):
         new_block = generate_block(base_block, instrument_pool)
+        percussion = get_percussion()
+        new_block['block_data']['blocks'].append(percussion)
         base_block['block_data']['blocks'].append(new_block)
 
     base_block['block_data']['blocks'] = block_organizer.organize_blocks(base_block['block_data']['blocks'])

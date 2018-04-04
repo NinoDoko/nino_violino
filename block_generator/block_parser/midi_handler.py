@@ -16,13 +16,11 @@ def add_notes_to_midi(mid, notes):
 
 def add_program_change(mid, block, program):
     s_data = block['structure_data']['timing_data']
-#    print 'Adding change for ', block['block_data'], ' with program ', program, ' at ', block['structure_data']['timing_data']['starting_beat']
     for starting_beat in s_data['starting_beats']: 
         mid.addProgramChange(block['block_data']['track'], block['block_data']['track'], starting_beat, program)
     return mid
 
 def midi_to_wav(midi_file):
-    print 'I will now use fluidsynth or something to convert it to wav. '
     wav_file = midi_file.split('.')[0] + '.wav'
     cmd = ['fluidsynth', '-F', wav_file, soundfont, midi_file]
     subprocess.call(cmd)
@@ -36,9 +34,12 @@ def handle_midi_changes(mid, block):
         for b in lower_blocks: 
             mid = handle_midi_changes(mid, b)
 
-    block_instrument = b_data.get('instrument', {}).get('program_number', 0)
+    block_instrument = b_data.get('instrument', {})
+    block_program_number = block_instrument.get('program_number')
+
     if b_data.get('track'):
-        add_program_change(mid, block, block_instrument)
+        if block_program_number: 
+            add_program_change(mid, block, block_program_number)
         if b_data.get('bpm'): 
             for starting_beat in block['structure_data']['timing_data']['starting_beats']:
                 mid.addTempo(b_data['track'], starting_beat, b_data['bpm'])
