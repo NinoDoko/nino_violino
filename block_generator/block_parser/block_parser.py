@@ -16,6 +16,7 @@ test_block = {
                 "structure_data" : {
                     "notes_data" : {
                         "chord_root" : "C4",
+                        "base_volume" : 30,
                     }, 
                     "timing_data" : {
                         "starting_beats" : [0]
@@ -56,6 +57,7 @@ test_block = {
         "notes_data" : {
             "chord_root" : "G3",
             "chord_type" : "major",
+            "base_volume" : 30, 
         },
         "timing_data" : {
             "starting_beats" : [12], 
@@ -97,7 +99,7 @@ def get_block_notes(block, parent_data = {}):
    
     #Returns a list of dicts, depicting bars with data about where the bar starts, and data about each note, like so: [{"start" : 0, "notes" : []}, {"start" : 3, "notes" : []}]
     #Each note has a start, length and volume; start and length are based on the bar pattern, volume is based on the accents
-    bars = timing_organizer.get_timings(**block['structure_data']['timing_data'])
+    bars = timing_organizer.get_timings(base_volume = block['structure_data']['notes_data'].get('base_volume'), **block['structure_data']['timing_data'])
 
     #For each element of the timings, we put a note there. 
     #This should update the existing timings with values for the specific notes: {"start" : 0, "end" : 2, "volume" : 60, "value" : "A"}

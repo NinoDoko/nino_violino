@@ -30,6 +30,6 @@ def add_instrument_data_to_notes(notes, block_data):
         note['track'] = block_data['track']
         if instrument: 
             note['program_number'] = instrument['program_number']
-            note['volume'] = instrument['volume']
+            note['volume'] = min(note['volume'] + instrument['volume'], 99)
 
     return notes

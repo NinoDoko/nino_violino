@@ -1,4 +1,4 @@
-import block_organizer, copy
+import block_organizer, copy, uuid
 from block_parser import block_parser, note_generator, chord_handler, instrument_handler
 
 from violino_conf import configuration as gen_conf
@@ -6,6 +6,7 @@ import random, copy
 
 block_template = {
     "block_data" : {
+        "id" : "",
         "blocks" : [],
     },
     "structure_data" : {
@@ -28,6 +29,7 @@ percussion_block = {
         'notes_data' : {
             'chord_root' : 'C1',
             'chord_type' : 'percussion',
+            'base_volume' : 100,
         },
         'timing_data' : {}
     }
@@ -80,14 +82,15 @@ def block_chord_generator(number_of_bars):
         }
         yield notes_data
 
-def base_block_timing(number_of_bars, bar_length, base_volume, accents, base_block, number_of_repeats):
+def base_block_timing(number_of_bars, bar_length, accents, base_block, number_of_repeats):
 
     timing_data = {
                 'starting_beats' : [i * number_of_bars * bar_length for i in range(number_of_repeats)],
                 'bar_length' : bar_length, 
                 'number_of_bars' : number_of_bars,
-                'base_volume' : base_volume,
-                'accents' : accents
+#                'base_volume' : base_volume,
+                'accents' : accents,
+                'max_note_len' : random.choice(gen_conf.get('max_note_len_range', [3])),
     }
     return timing_data
 
@@ -106,7 +109,9 @@ def generate_block(base_block, instrument_pool):
 
     new_block['block_data']['bpm'] = get_block_bpm(base_block)
     new_block['block_data']['block_occurences'] = number_block_occurences
-    new_block['structure_data']['timing_data'] = base_block_timing(number_of_bars, bar_length, base_volume, accents, base_block, number_of_repeats)
+    new_block['block_data']['id'] = 'block_' + str(uuid.uuid4())[:8]
+    new_block['structure_data']['timing_data'] = base_block_timing(number_of_bars, bar_length, accents, base_block, number_of_repeats)
+    new_block['structure_data']['notes_data']['base_volume'] = gen_conf.get('base_volume', 30)
 
     for i in range(number_of_bars): 
         instrument = random.choice(instrument_pool)
@@ -121,7 +126,7 @@ def generate_block(base_block, instrument_pool):
         block_instrument = {
             'block_data' : {
                 'instrument' : instrument,
-                'track' : i+1
+                'track' : i+1,
             }, 
             'structure_data' : {
                 'timing_data' : {},
@@ -149,7 +154,7 @@ def generate_song():
     base_block = copy.deepcopy(block_template)
     base_block['block_data']['bpm'] = random.choice(gen_conf.get('bpm_range', [240]))
 
-    max_number_of_instruments = gen_conf.get('bar_number_range', range(4, 7))[-1]
+    max_number_of_instruments = gen_conf.get('instrument_pool_range', range(4, 7))[-1]
     instrument_pool = [random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments())) for i in range(max_number_of_instruments)]
     print 'Instrument pool is : ', instrument_pool
     for block in range(number_of_blocks):

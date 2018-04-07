@@ -2,10 +2,11 @@ import random, copy
 
 #This is kinda a dummy function, which atm only randomly makes a pattern.
 #TODO I probably want to do this with some sort of AI. Maybe some neurons or something. 
-def make_bar_pattern(number_of_notes):
+def make_bar_pattern(number_of_notes, max_note_len):
     pattern = []
-    while number_of_notes:
-        next_val = random.randint(1, number_of_notes)
+    while number_of_notes > 0:
+
+        next_val = min(random.randint(1, number_of_notes), max_note_len)
 #        next_dur = random.randint(1, next_val * 2)  #TODO find a better way to find durations that don't sound creepy
         next_dur = 1
 
@@ -28,8 +29,8 @@ def generate_notes_for_bar(bar_length, pattern):
 
 
 #Gets a dictionary containing data on how to order notes. 
-def get_timings(starting_beats = [], bar_length = 4, number_of_bars = 4, pattern = [], accents = {}, base_volume = 50):
-    pattern = pattern or make_bar_pattern(bar_length)
+def get_timings(starting_beats = [], bar_length = 4, number_of_bars = 4, pattern = [], accents = {}, base_volume = 50, max_note_len = 3):
+    pattern = pattern or make_bar_pattern(bar_length, max_note_len)
     base_bars = [
         {'bar_offset' : bar_length * i, "base_volume" : base_volume, "notes" : generate_notes_for_bar(bar_length, pattern)}
     for i in range(number_of_bars)]

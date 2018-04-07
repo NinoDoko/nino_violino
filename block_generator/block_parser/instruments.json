@@ -1,34 +1,34 @@
 [{
         "program_number": 1,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:0 - 0:4",
         "instrument_name": "piano",
         "friendly": "Piano"
     },
     {
         "program_number": 2,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:4 - 0:8",
         "instrument_name": "piano_2",
         "friendly": "Piano 2"
     },
     {
         "program_number": 3,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:8 - 0:12",
         "instrument_name": "piano_3",
         "friendly": "Piano 3"
     },
     {
         "program_number": 4,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:12 - 0:16",
         "instrument_name": "piano_electronic",
         "friendly": "Electronic piano"
     },
     {
         "program_number": 5,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:16 - 0:20",
         "instrument_name": "piano_electronic_2",
         "friendly": "Electronic piano 2"
@@ -43,7 +43,7 @@
     },
     {
         "program_number": 7,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:24 - 0:28",
         "instrument_name": "harpsicord_2",
         "friendly": "Harpsicord 2",
@@ -79,7 +79,7 @@
     },
     {
         "program_number": 11,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:40 - 0:44",
         "instrument_name": "bells_4",
         "friendly": "Bells 4",
@@ -87,7 +87,7 @@
     },
     {
         "program_number": 12,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:44 - 0:48",
         "instrument_name": "bells_5",
         "friendly": "Bells 5",
@@ -95,7 +95,7 @@
     },
     {
         "program_number": 13,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:48 - 0:52",
         "instrument_name": "perc_1",
         "friendly": "Percussion 1",
@@ -103,7 +103,7 @@
     },
     {
         "program_number": 14,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:52 - 0:56",
         "instrument_name": "bells_church",
         "friendly": "Church bells",
@@ -112,7 +112,7 @@
     },
     {
         "program_number": 15,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "0:56 - 1:0",
         "instrument_name": "string_nylon",
         "friendly": "Nylon string",
@@ -120,7 +120,7 @@
     },
     {
         "program_number": 16,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "1:0 - 1:4",
         "instrument_name": "organ",
         "friendly": "Organ",
@@ -128,7 +128,7 @@
     },
     {
         "program_number": 17,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "1:4 - 1:8",
         "instrument_name": "organ_2",
         "friendly": "Organ 2",
@@ -168,7 +168,7 @@
     },
     {
         "program_number": 24,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "1:32 - 1:36",
         "instrument_name": "guitar",
         "friendly": "Guitar"
@@ -198,7 +198,7 @@
     },
     {
         "program_number": 28,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "1:48 - 1:52",
         "instrument_name": "guitar_bass",
         "friendly": "Bass guitar"
@@ -230,28 +230,28 @@
     },
     {
         "program_number": 32,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:4 - 2:8",
         "instrument_name": "string_pizzi",
         "friendly": "String pizzicatto"
     },
     {
         "program_number": 33,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:8 - 2:12",
         "instrument_name": "string_electric",
         "friendly": "Electric string"
     },
     {
         "program_number": 34,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:12 - 2:16",
         "instrument_name": "string_metal",
         "friendly": "Metal string"
     },
     {
         "program_number": 35,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:16 - 2:20",
         "instrument_name": "brass",
         "friendly": "Brass",
@@ -259,7 +259,7 @@
     },
     {
         "program_number": 36,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:20 - 2:24",
         "instrument_name": "string_metal_2",
         "friendly": "Metal string 2"
@@ -280,7 +280,7 @@
     },
     {
         "program_number": 39,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:32 - 2:36",
         "instrument_name": "brass_2",
         "friendly": "Brass 2",
@@ -323,21 +323,21 @@
     },
     {
         "program_number": 45,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "2:56 - 3:0",
         "instrument_name": "strings_pizzi",
         "friendly": "Strings pizzicatto"
     },
     {
         "program_number": 46,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "3:0 - 3:4",
         "instrument_name": "string_3",
         "friendly": "String 3"
     },
     {
         "program_number": 47,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "3:4 - 3:8",
         "instrument_name": "nesho",
         "friendly": "Nesho",
@@ -391,15 +391,6 @@
         "instrument_play_time": "3:32 - 3:36",
         "instrument_name": "synth_2",
         "friendly": "Synthetized 2"
-    },
-    {
-        "program_number": 55,
-        "volume": 60,
-        "instrument_play_time": "3:36 - 3:40",
-        "instrument_name": "effect_sound",
-        "friendly": "Sound effect",
-        "note_len": 4,
-        "reroll_chance": 60
     },
     {
         "program_number": 56,
@@ -519,7 +510,7 @@
     },
     {
         "program_number": 72,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "4:44 - 4:48",
         "instrument_name": "wind_6",
         "friendly": "Wind 6"
@@ -533,35 +524,35 @@
     },
     {
         "program_number": 74,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "4:52 - 4:56",
         "instrument_name": "wind_8",
         "friendly": "Wind 8"
     },
     {
         "program_number": 75,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "4:56 - 5:0",
         "instrument_name": "wind_9",
         "friendly": "Wind 9"
     },
     {
         "program_number": 76,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "5:0 - 5:4",
         "instrument_name": "wind_10",
         "friendly": "Wind 10"
     },
     {
         "program_number": 77,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "5:4 - 5:8",
         "instrument_name": "wind_11",
         "friendly": "Wind 11"
     },
     {
         "program_number": 78,
-        "volume": 80,
+        "volume": 60,
         "instrument_play_time": "5:8 - 5:12",
         "instrument_name": "wind_10",
         "friendly": "Wind 10"
