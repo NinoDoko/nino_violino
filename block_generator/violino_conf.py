@@ -1,6 +1,6 @@
 configuration = {
     'bpm_change_chance' : 0.15, 
-    'bpm_range' : range(200, 500, 50), 
+    'bpm_range' : range(300, 700, 50), 
 
     'number_of_blocks' : 4, 
     'bar_number_range' : range(2, 6),
