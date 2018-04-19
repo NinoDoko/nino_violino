@@ -126,7 +126,7 @@ def make_block_music(block):
     midi_file_name = midi_handler.write_mid_file(midi_file)
 
     #midi_file should just be a filename. We want to make it into a wav. 
-    wav_file = midi_handler.midi_to_wav(midi_file_name)
+    wav_file = midi_handler.midi_to_wav(midi_file_name, soundfont =  '/home/ninodoko/moj_repos/nino_violino/block_generator/SGM-V2.01.sf2')
     
     #And done!
     return wav_file

@@ -1,6 +1,5 @@
 import subprocess
 from midiutil.MidiFile import MIDIFile
-soundfont = '/home/ninodoko/moj_repos/nino_violino/block_generator/SGM-V2.01.sf2'
 
 def write_mid_file(mid, file_name = 'test.mid'):
     with open(file_name, 'w+b') as f: 
@@ -20,7 +19,7 @@ def add_program_change(mid, block, program):
         mid.addProgramChange(block['block_data']['track'], block['block_data']['track'], starting_beat, program)
     return mid
 
-def midi_to_wav(midi_file):
+def midi_to_wav(midi_file, soundfont):
     wav_file = midi_file.split('.')[0] + '.wav'
     cmd = ['fluidsynth', '-F', wav_file, soundfont, midi_file]
     subprocess.call(cmd)
