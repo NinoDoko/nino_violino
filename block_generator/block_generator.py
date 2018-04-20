@@ -4,6 +4,9 @@ from block_parser import block_parser, note_generator, chord_handler, instrument
 from violino_conf import configuration as gen_conf
 import random, copy
 
+soundfont  =  '/home/ninodoko/moj_repos/nino_violino/block_generator/SGM-V2.01.sf2'
+
+
 block_template = {
     "block_data" : {
         "id" : "",
@@ -168,7 +171,7 @@ def generate_song():
     for b in base_block['block_data']['blocks']: 
         print_block_instruments(b)
 
-    block_parser.make_block_music(base_block)
+    block_parser.make_block_music(base_block, soundfont = soundfont)
 
     return base_block
 
