@@ -2,9 +2,8 @@ import block_organizer, copy, uuid
 from block_parser import block_parser, note_generator, chord_handler, instrument_handler
 
 from violino_conf import configuration as gen_conf
+from song_namer.names_generator import get_name
 import random, copy
-
-soundfont  =  '/home/ninodoko/moj_repos/nino_violino/block_generator/SGM-V2.01.sf2'
 
 
 block_template = {
@@ -30,11 +29,16 @@ percussion_block = {
     },
     'structure_data' : {
         'notes_data' : {
-            'chord_root' : 'C1',
-            'chord_type' : 'percussion',
+            'chord_progression' :[
+                { 
+                    'chord_root' : 'C1',
+                    'chord_type' : 'percussion',
+                }
+            ],
             'base_volume' : 100,
         },
-        'timing_data' : {}
+        'timing_data' : {
+        }
     }
 }
 
@@ -65,7 +69,7 @@ def get_last_timing(base_block):
 
     return last_timing
 
-def block_chord_generator(number_of_bars):
+def get_chord_progression(number_of_bars):
     base_root = random.choice(chord_handler.base_notes)
 
     #Right now we just randomly choose from the configuration. Maybe have an AI to do this for us? 
@@ -76,14 +80,15 @@ def block_chord_generator(number_of_bars):
 
     chord_progression = chord_handler.make_chord_progression(base_root = base_root, base_chord = base_chord, number_of_chords = number_of_bars, chord_choices = chord_choices, lower_chord_diff_limit = low_limit, upper_chord_diff_limit = upper_limit)
 
-
+    chords = []
     for i in range(number_of_bars):
         chord = chord_progression[i]
         notes_data = {
             'chord_root' : chord[0] + '3',
             'chord_type' : chord[1],
         }
-        yield notes_data
+        chords.append(notes_data)
+    return chords
 
 def base_block_timing(number_of_bars, bar_length, accents, base_block, number_of_repeats):
 
@@ -108,7 +113,8 @@ def generate_block(base_block, instrument_pool):
     number_block_occurences = random.choice(gen_conf.get('number_block_occurences_range', [1]))
 
     accents = {} #Temporary, don't even know how to make this work. 
-    chord_generator = block_chord_generator(number_of_bars)
+#    chord_generator = block_chord_generator(len(instrument_pool))
+    chord_progression = get_chord_progression(number_of_bars)
 
     new_block['block_data']['bpm'] = get_block_bpm(base_block)
     new_block['block_data']['block_occurences'] = number_block_occurences
@@ -116,7 +122,9 @@ def generate_block(base_block, instrument_pool):
     new_block['structure_data']['timing_data'] = base_block_timing(number_of_bars, bar_length, accents, base_block, number_of_repeats)
     new_block['structure_data']['notes_data']['base_volume'] = gen_conf.get('base_volume', 30)
 
-    for i in range(number_of_bars): 
+
+
+    for i in range(len(instrument_pool)):
         instrument = random.choice(instrument_pool)
         instrument = instrument_handler.get_instrument_data(instrument)
 
@@ -132,8 +140,13 @@ def generate_block(base_block, instrument_pool):
                 'track' : i+1,
             }, 
             'structure_data' : {
-                'timing_data' : {},
-                'notes_data' : next(chord_generator),
+                'timing_data' : {
+#                    'starting_beats' : [i * bar_length * number_of_bars],
+                    'number_of_bars' : number_of_bars
+                },
+                'notes_data' : {
+                    'chord_progression' : chord_progression,
+                }
             }
         }
         new_block['block_data']['blocks'].append(block_instrument)
@@ -158,6 +171,7 @@ def generate_song():
     base_block['block_data']['bpm'] = random.choice(gen_conf.get('bpm_range', [240]))
 
     max_number_of_instruments = gen_conf.get('instrument_pool_range', range(4, 7))[-1]
+    print 'Max number of instruments : ', max_number_of_instruments
     instrument_pool = [random.choice(gen_conf.get('instrument_pool', instrument_handler.get_list_of_instruments())) for i in range(max_number_of_instruments)]
     print 'Instrument pool is : ', instrument_pool
     for block in range(number_of_blocks):
@@ -171,7 +185,9 @@ def generate_song():
     for b in base_block['block_data']['blocks']: 
         print_block_instruments(b)
 
-    block_parser.make_block_music(base_block, soundfont = soundfont)
+    song_name = get_name()
+    song_path = gen_conf['song_path'] + get_name()
+    block_parser.make_block_music(base_block, soundfont = gen_conf['soundfont'], song_name = song_path)
 
     return base_block
 

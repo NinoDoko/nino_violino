@@ -72,7 +72,7 @@ test_block = {
 #TODO finish writing up what should be stored in this data. 
 
 
-#Updates a child block with its parent's data if the child doesn't have that key populated. Allows certain keys to be excluded. 
+#Updates a child block with its parent's data if the child doesn't have that key populated. Allows certain keys to be excluded or accumulated (added up with the parent)
 def update_child_from_parent(child, parent, excluded_keys = []):
     for key in parent: 
         if key not in child and key not in excluded_keys: 
@@ -80,6 +80,7 @@ def update_child_from_parent(child, parent, excluded_keys = []):
 
     return child
    
+
 
 def get_block_notes(block, parent_data = {}):
 
@@ -112,7 +113,7 @@ def get_block_notes(block, parent_data = {}):
     return notes
 
 
-def make_block_music(block, soundfont):
+def make_block_music(block, soundfont, song_name):
     notes = get_block_notes(block)
 
     midi_file = MIDIFile(100)
@@ -123,12 +124,12 @@ def make_block_music(block, soundfont):
     #We also have to add the program, bpm, etc. changes, if any. 
     midi_handler.handle_midi_changes(midi_file, block)
 
-    midi_file_name = midi_handler.write_mid_file(midi_file)
+    midi_handler.write_mid_file(midi_file, song_name)
 
     #midi_file should just be a filename. We want to make it into a wav. 
-    wav_file = midi_handler.midi_to_wav(midi_file_name, soundfont)
+    midi_handler.midi_to_wav(song_name, soundfont)
     
     #And done!
-    return wav_file
+    return song_name 
 
 #parse_block(test_block)

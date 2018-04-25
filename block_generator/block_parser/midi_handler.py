@@ -2,9 +2,10 @@ import subprocess
 from midiutil.MidiFile import MIDIFile
 
 def write_mid_file(mid, file_name = 'test.mid'):
+    if not file_name.endswith('.mid'): 
+        file_name += '.mid'
     with open(file_name, 'w+b') as f: 
         mid.writeFile(f)
-    return file_name
 
 def add_notes_to_midi(mid, notes):
     file_name = 'test.mid'
@@ -19,11 +20,13 @@ def add_program_change(mid, block, program):
         mid.addProgramChange(block['block_data']['track'], block['block_data']['track'], starting_beat, program)
     return mid
 
-def midi_to_wav(midi_file, soundfont):
-    wav_file = midi_file.split('.')[0] + '.wav'
-    cmd = ['fluidsynth', '-F', wav_file, soundfont, midi_file]
+def midi_to_wav(file_name, soundfont):
+    if file_name.endswith('.mid'): 
+        file_name = file_name[:-4]
+    wav_name = file_name +'.wav'
+    midi_name = file_name + '.mid'
+    cmd = ['fluidsynth', '-F', wav_name, soundfont, midi_name]
     subprocess.call(cmd)
-    return wav_file
 
 def handle_midi_changes(mid, block):
     b_data = block['block_data']

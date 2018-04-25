@@ -52,9 +52,11 @@ def generate_notes_for_bar(bar, chord_root, chord_type, note_generator, base_vol
     return bar
 
 #We update all the bars so their notes will hold data about what pitch the note actually plays. 
-def generate_notes(bars, chord_root, chord_type, base_volume):
-    note_generator = get_next_note_markov(markov_values, chord_root, chord_type)
-    for bar in bars: 
-        bar = generate_notes_for_bar(bar, chord_root, chord_type, note_generator, base_volume)
+def generate_notes(bars, chord_progression, base_volume):
+    for i in range(len(bars)):
+        bar = bars[i]
+        chord = chord_progression[i % len(chord_progression)]
+        note_generator = get_next_note_markov(markov_values, chord['chord_root'], chord['chord_type'])
+        bar = generate_notes_for_bar(bar, chord['chord_root'], chord['chord_type'], note_generator, base_volume)
     notes = [y for x in bars for y in x['notes']]
     return notes
