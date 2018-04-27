@@ -7,11 +7,11 @@ configuration = {
     'song_path' : conf_path + '/misc/generated_songs/',
 
     'bpm_change_chance' : 0.3, 
-    'bpm_range' : range(200, 700, 50), 
+    'bpm_range' : range(150, 550, 25), 
 
 
     'no_bars_initial' : 5,
-    'occurence_multiplier' : 50,
+    'occurence_multiplier' : 60,
 
     'number_of_blocks_range' : [3,8], 
     'number_of_repeats_range' : range(1, 5),

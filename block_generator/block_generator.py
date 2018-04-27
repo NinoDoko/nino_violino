@@ -166,37 +166,33 @@ def print_block_instruments(block):
     print 'Instruments for block at ', block['structure_data']['timing_data']['starting_beats'], ' are ', [x['block_data']['instrument']['instrument_name'] for x in instrument_blocks]
 
 def bar_timing_generator(no_blocks):
-    print 'Making generator!'
     no_bars_initial = gen_conf.get('block_len_initial', 5)
     no_bars_range = [max(1, no_bars_initial - no_blocks), no_bars_initial + (no_blocks/2)]
-    max_blocks = gen_conf.get('max_blocks_played', 10)
     bar_len_initial = gen_conf.get('bar_len_initial', 15)
 
-    print 'Have ', no_blocks, ' number of blocks, so my range is : ', no_bars_range, ' and max blocks : ', max_blocks
-
-    get_occurences = lambda l, n: max(2, int(gen_conf.get('occurence_multiplier', 30) / float(bar_len * no_bars)))
+    get_occurences = lambda l, n: max(2, int(gen_conf.get('occurence_multiplier', 30) / float(l * n)))
 
     for b in range(no_blocks): 
         no_bars = random.randint(*no_bars_range)
         bar_len_range = 3, bar_len_initial - no_bars
         bar_len = random.randint(*bar_len_range)
         occurences_range = [1, get_occurences(bar_len, no_bars)]
-        print 'Range is : ', occurences_range, ' for ', bar_len, no_bars, bar_len * no_bars, 25 / float(bar_len*no_bars)
+        print 'Got occurence range : ', occurences_range, ' with ', bar_len, no_bars
         number_occurences = random.randint(*occurences_range)
-        print 'I have ', no_bars, ' bars and each bar is ', bar_len, ' from the range of ', bar_len_range, ' and occurences ', number_occurences, ' for bar ', b
         new_block_stats = {
             'number_of_bars' : no_bars, 
             'bar_length' : bar_len, 
             'block_occurences' : number_occurences,
         }
-        max_blocks -= number_occurences
-        print 'Max blocks is : ', max_blocks
         yield new_block_stats
 
 def generate_song():
-    number_of_blocks = random.choice(gen_conf.get('number_of_blocks_range', [1]))
+    number_blocks_range = gen_conf.get('number_of_blocks_range', [1])
+    number_of_blocks = random.choice(number_blocks_range)
     base_block = copy.deepcopy(block_template)
-    base_block['block_data']['bpm'] = random.choice(gen_conf.get('bpm_range', [240]))
+    base_bpm = random.choice(gen_conf.get('bpm_range', [240]))
+    base_block['block_data']['bpm'] = int(base_bpm / (float(number_of_blocks) / number_blocks_range[-1]))
+    print 'BPM is : ', base_block['block_data']['bpm']
 
     max_number_of_instruments = gen_conf.get('instrument_pool_range', range(4, 7))[-1]
     print 'Max number of instruments : ', max_number_of_instruments
