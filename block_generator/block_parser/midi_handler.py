@@ -37,7 +37,7 @@ def handle_midi_changes(mid, block):
             mid = handle_midi_changes(mid, b)
 
     block_instrument = b_data.get('instrument', {})
-    block_program_number = block_instrument.get('program_number')
+    block_program_number = block_instrument.get('program_number') or b_data.get('program_number')
 
     if b_data.get('track'):
         if block_program_number: 

@@ -50,7 +50,11 @@ def get_block_bpm(block):
     if random.random() < gen_conf.get('bpm_change_chance', 0): 
         if not gen_conf.get('bpm_range'): 
             raise Exception('bpm_change_chance is set in conf, but bpm_range is set. If you want the BPM to change randomly, enable bpm_change_chance to the chance that each block will change the BPM, such as 0.15 for 15%, and set bpm_range to a range of values that it will choose from, such as range(250, 500, 50)')
-        new_bpm = random.choice(gen_conf['bpm_range'])
+        bpm_index = gen_conf['bpm_range'].index(block['block_data']['bpm'])
+        bpm_change_limit = gen_conf.get('bpm_change_limit', 5)
+        bpm_range = gen_conf['bpm_range'][bpm_index - bpm_change_limit : 1 + bpm_index + bpm_change_limit]
+
+        new_bpm = random.choice(bpm_range)
     else: 
         new_bpm = block['block_data']['bpm']
 
@@ -111,6 +115,7 @@ def generate_block(base_block, instrument_pool, bar_timing_gen):
     base_volume = random.choice(gen_conf.get('base_volume_range', range(40, 80, 10)))
     number_of_repeats = random.choice(gen_conf.get('number_of_repeats_range', [1]))
     number_block_occurences = random.choice(gen_conf.get('number_block_occurences_range', [1]))
+    number_block_occurences = bar_timing['block_occurences']
 
     accents = {} #Temporary, don't even know how to make this work. 
 #    chord_generator = block_chord_generator(len(instrument_pool))
@@ -170,15 +175,14 @@ def bar_timing_generator(no_blocks):
     no_bars_range = [max(1, no_bars_initial - no_blocks), no_bars_initial + (no_blocks/2)]
     bar_len_initial = gen_conf.get('bar_len_initial', 15)
 
-    get_occurences = lambda l, n: max(2, int(gen_conf.get('occurence_multiplier', 30) / float(l * n)))
+    get_occurences = lambda l, n: max(1, int(gen_conf.get('occurence_multiplier', 30) / float(l * n)))
 
     for b in range(no_blocks): 
         no_bars = random.randint(*no_bars_range)
         bar_len_range = 3, bar_len_initial - no_bars
         bar_len = random.randint(*bar_len_range)
         occurences_range = [1, get_occurences(bar_len, no_bars)]
-        print 'Got occurence range : ', occurences_range, ' with ', bar_len, no_bars
-        number_occurences = random.randint(*occurences_range)
+        number_occurences = occurences_range[-1]
         new_block_stats = {
             'number_of_bars' : no_bars, 
             'bar_length' : bar_len, 
@@ -188,10 +192,12 @@ def bar_timing_generator(no_blocks):
 
 def generate_song():
     number_blocks_range = gen_conf.get('number_of_blocks_range', [1])
+    print 'Choosing from ', number_blocks_range
     number_of_blocks = random.choice(number_blocks_range)
     base_block = copy.deepcopy(block_template)
     base_bpm = random.choice(gen_conf.get('bpm_range', [240]))
-    base_block['block_data']['bpm'] = int(base_bpm / (float(number_of_blocks) / number_blocks_range[-1]))
+    base_block['block_data']['bpm'] = base_bpm
+#    base_block['block_data']['bpm'] = int(base_bpm / (float(number_blocks_range[-1]) / number_of_blocks))
     print 'BPM is : ', base_block['block_data']['bpm']
 
     max_number_of_instruments = gen_conf.get('instrument_pool_range', range(4, 7))[-1]
