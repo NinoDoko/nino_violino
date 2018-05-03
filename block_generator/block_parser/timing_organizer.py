@@ -41,6 +41,7 @@ def get_timings(starting_beats = [], bar_length = 4, number_of_bars = 4, pattern
         new_bars = copy.deepcopy(base_bars)
         for bar in new_bars: 
             bar['start'] = bar['bar_offset'] + starting_beat
+            bar['starting_beat'] = starting_beat
 
         bars += new_bars
 

@@ -1,4 +1,4 @@
-import random, chord_handler
+import random, chord_handler, copy
 from markov_values import markov_values
 
 
@@ -51,12 +51,38 @@ def generate_notes_for_bar(bar, chord_root, chord_type, note_generator, base_vol
         note['pitch'] = chord_handler.get_pitch(note['value'])
     return bar
 
-#We update all the bars so their notes will hold data about what pitch the note actually plays. 
-def generate_notes(bars, chord_progression, base_volume):
+def generate_notes_for_bars(bars, chord_progression, base_volume):
     for i in range(len(bars)):
         bar = bars[i]
         chord = chord_progression[i % len(chord_progression)]
         note_generator = get_next_note_markov(markov_values, chord['chord_root'], chord['chord_type'])
         bar = generate_notes_for_bar(bar, chord['chord_root'], chord['chord_type'], note_generator, base_volume)
+        bars[i] = bar
+    return bars
+
+def copy_bar_note_pitches(original_bar, new_bar):
+    notes = []
+
+    for original, new in zip(original_bar['notes'], new_bar['notes']):
+        note = new
+        note['pitch'] = original['pitch']
+        note['value'] = original['value']
+        notes.append(note)
+
+    return notes
+
+#Continuing with weird ways to do things. 
+#We generate notes for all bars of the first starting beat. Then, we copy those notes to all other bars, sans the timing. 
+#Thus, a block with starting_beats: [0, 15] would generate an initial sequence of notes for the bars starting at 0, and the copy that sequence for the beats at [0, 15].
+def generate_notes(bars, chord_progression, base_volume, starting_beats):
+    initial_bars = [bar for bar in bars if bar['starting_beat'] == starting_beats[0]]
+    initial_bars = generate_notes_for_bars(initial_bars, chord_progression, base_volume)
+
+    for beat in starting_beats: 
+        current_bars = [bar for bar in bars if bar['starting_beat'] == beat]
+        for initial, current in zip(initial_bars, current_bars):
+
+            current['notes'] = copy_bar_note_pitches(initial, current)
+
     notes = [y for x in bars for y in x['notes']]
     return notes

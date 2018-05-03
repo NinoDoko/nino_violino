@@ -16,7 +16,7 @@ configuration = {
     'no_bars_initial' : 5,
     'occurence_multiplier' : 60,
 
-    'number_of_blocks_range' : [1,2], 
+    'number_of_blocks_range' : [3,8], 
     'number_of_repeats_range' : range(1, 5),
     'max_note_len_range' : range(2, 5),
 

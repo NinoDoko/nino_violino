@@ -104,7 +104,7 @@ def get_block_notes(block, parent_data = {}):
 
     #For each element of the timings, we put a note there. 
     #This should update the existing timings with values for the specific notes: {"start" : 0, "end" : 2, "volume" : 60, "value" : "A"}
-    notes = note_generator.generate_notes(bars = bars, **block['structure_data']['notes_data'])
+    notes = note_generator.generate_notes(bars = bars, starting_beats = block['structure_data']['timing_data']['starting_beats'], **block['structure_data']['notes_data'])
 
     #Then we update the notes with the instruments, which may modify the volume (for instance, trumpet may be loud, so it should have a multiplier, like {"insturment" : "trumpet", "volume" : 0.5, "program_number" : 123}, not the actual program_number tho.
     notes = instrument_handler.add_instrument_data_to_notes(notes = notes, block_data = block['block_data'])
