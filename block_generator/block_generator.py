@@ -52,7 +52,8 @@ def get_block_bpm(block):
             raise Exception('bpm_change_chance is set in conf, but bpm_range is set. If you want the BPM to change randomly, enable bpm_change_chance to the chance that each block will change the BPM, such as 0.15 for 15%, and set bpm_range to a range of values that it will choose from, such as range(250, 500, 50)')
         bpm_index = gen_conf['bpm_range'].index(block['block_data']['bpm'])
         bpm_change_limit = gen_conf.get('bpm_change_limit', 5)
-        bpm_range = gen_conf['bpm_range'][bpm_index - bpm_change_limit : 1 + bpm_index + bpm_change_limit]
+        bpm_range = gen_conf['bpm_range'][bpm_index - bpm_change_limit : 1 + bpm_index + bpm_change_limit] or gen_conf['bpm_range']
+        print 'Bpm range is : ', bpm_range
 
         new_bpm = random.choice(bpm_range)
     else: 
@@ -179,8 +180,9 @@ def bar_timing_generator(no_blocks):
 
     for b in range(no_blocks): 
         no_bars = random.randint(*no_bars_range)
-        bar_len_range = 3, bar_len_initial - no_bars
-        bar_len = random.randint(*bar_len_range)
+#        bar_len_range = 3.0 / bar_len_initial - no_bars
+        bar_len = int(bar_len_initial / float(no_bars))
+#        bar_len = random.randint(*bar_len_range)
         occurences_range = [1, get_occurences(bar_len, no_bars)]
         number_occurences = occurences_range[-1]
         new_block_stats = {

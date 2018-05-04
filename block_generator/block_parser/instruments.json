@@ -409,15 +409,6 @@
         "friendly": "Synthetized 2"
     },
     {
-        "program_number": 55,
-        "volume": 60,
-        "instrument_play_time": "3:36 - 3:40",
-        "instrument_name": "effect_sound",
-        "friendly": "Sound effect",
-        "note_len": 4,
-        "reroll_chance": 60
-    },
-    {
         "program_number": 56,
         "volume": 40,
         "instrument_play_time": "3:40 - 3:44",

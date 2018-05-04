@@ -9,12 +9,13 @@ configuration = {
     'song_path' : conf_path + '/misc/generated_songs/',
 
     'bpm_change_chance' : 0.3, 
-    'bpm_change_limit' : 2,
-    'bpm_range' : range(150, 550, 25), 
+    'bpm_change_limit' : 4,
+    'bpm_range' : range(250, 600, 25), 
 
 
     'no_bars_initial' : 5,
-    'occurence_multiplier' : 60,
+    'occurence_multiplier' : 40,
+    'bar_len_initial' : 20,
 
     'number_of_blocks_range' : [3,8], 
     'number_of_repeats_range' : range(1, 5),
@@ -22,7 +23,7 @@ configuration = {
 
     'base_chords_choices' : ['major', 'minor'],
     'lower_chord_diff_limit' : 1, 
-    'upper_chord_diff_limit' : 2,
+    'upper_chord_diff_limit' : 3,
     'chord_types' : ['major', 'minor'], 
     'instrument_pool_range' : range(2, 9),
 
