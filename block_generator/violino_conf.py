@@ -17,7 +17,7 @@ configuration = {
     'occurence_multiplier' : 40,
     'bar_len_initial' : 20,
 
-    'number_of_blocks_range' : [3,8], 
+    'number_of_blocks_range' : [2,5], 
     'number_of_repeats_range' : range(1, 5),
     'max_note_len_range' : range(2, 5),
 

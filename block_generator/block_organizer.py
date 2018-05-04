@@ -5,14 +5,24 @@ def get_ending_of_block(timing_data):
     return block_end
 
 
-def get_shuffled_blocks(blocks):
+def shuffle_blocks(blocks):
     shuffled_blocks = []
-    for block in blocks: 
-        for i in range(block['block_data']['block_occurences']): 
-            new_block = copy.deepcopy(block)
-            shuffled_blocks.append(new_block)
+    while any([b['block_data']['block_occurences'] for b in blocks]):
+        new_block = random.choice(blocks)
 
-    random.shuffle(shuffled_blocks)
+        if len(shuffled_blocks) > 1 and len(blocks) > 1:
+            if new_block['block_data']['id'] == shuffled_blocks[-1] == shuffled_blocks[-2]:
+                continue
+        if new_block['block_data']['block_occurences'] == 0: 
+            continue
+
+        shuffled_blocks.append(copy.deepcopy(new_block))
+        new_block['block_data']['block_occurences'] -= 1
+    return shuffled_blocks
+
+def get_shuffled_blocks(blocks):
+    new_blocks = copy.deepcopy(blocks)
+    shuffled_blocks = shuffle_blocks(new_blocks)
 
     for b in range(1, len(shuffled_blocks)): 
         block_t_data = shuffled_blocks[b]['structure_data']['timing_data']
@@ -29,7 +39,6 @@ def get_shuffled_blocks(blocks):
 #Then I find all corresponding original blocks based on the block_id, and add up the starting beats. 
 def organize_blocks(blocks):
     shuffled_blocks = get_shuffled_blocks(blocks)
-
     for block in blocks: 
         block['structure_data']['timing_data']['starting_beats'] = []
 
