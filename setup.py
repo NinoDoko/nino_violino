@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-  name='Nino Violino',
+  name='nino_violino',
   packages=['block_generator'],
   version='0.0.1',
   description='Yet another music generator. ',
@@ -9,5 +9,6 @@ setuptools.setup(
   author='Nikola Dokoski',
   install_requires=[
     'midiutil',
+    'haikunator',
   ],
 )

@@ -1,7 +1,6 @@
 import os
-conf_path = os.getcwd()
+conf_path = '/'.join(os.path.realpath(__file__).split('/')[:-1])
 
-print conf_path
 configuration = {
 #    'soundfont' : conf_path + '/misc/SGM-V2.01.sf2',
     'soundfont' : conf_path + '/misc/32MbGMStereo.sf2',
@@ -10,14 +9,14 @@ configuration = {
 
     'bpm_change_chance' : 0.3, 
     'bpm_change_limit' : 4,
-    'bpm_range' : range(250, 600, 25), 
+    'bpm_range' : range(200, 600, 25), 
 
 
     'no_bars_initial' : 5,
     'occurence_multiplier' : 40,
     'bar_len_initial' : 20,
 
-    'number_of_blocks_range' : [2,5], 
+    'number_of_blocks_range' : [3,6], 
     'number_of_repeats_range' : range(1, 5),
     'max_note_len_range' : range(2, 5),
 

@@ -7,3 +7,6 @@
 *backup
 block_generator/pretty_cool
 block_generator/misc
+dist/*
+build/*
+nino_violino.egg-info/*

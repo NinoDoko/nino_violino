@@ -2,7 +2,7 @@ import block_organizer, copy, uuid
 from block_parser import block_parser, note_generator, chord_handler, instrument_handler
 
 from violino_conf import configuration as gen_conf
-from song_namer.names_generator import get_name
+from song_namer.ninoinator import Ninoinator
 import random, copy, math
 
 
@@ -218,11 +218,11 @@ def generate_song():
     for b in base_block['block_data']['blocks']: 
         print_block_instruments(b)
 
-    song_name = get_name()
-    song_path = gen_conf['song_path'] + get_name()
+    song_name = Ninoinator().ninoinate(token_length = 0)
+    song_path = gen_conf['song_path'] + song_name
     block_parser.make_block_music(base_block, soundfont = gen_conf['soundfont'], song_name = song_path)
 
-    return base_block
+    return song_path 
 
-
-generate_song()
+if __name__ == '__main__': 
+    generate_song()
